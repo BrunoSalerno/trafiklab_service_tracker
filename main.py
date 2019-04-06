@@ -33,6 +33,7 @@ while True:
         if journey.has_stops_info():
             journey.print()
             if journey.finished():
+                journey.to_csv()
                 current_journey_id = None
                 print('=> Destination reached')
         else:

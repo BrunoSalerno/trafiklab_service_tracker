@@ -1,12 +1,16 @@
 import requests
 import datetime
 import time
+import itertools
+import os
+import csv
 
 class Journey(object):
     def __init__(self, journey_id, api_key):
         self.api_key = api_key
         self.journey_id = journey_id
         self.stops = None
+        self.name = None
         self.load()
 
     def has_stops_info(self):
@@ -20,6 +24,8 @@ class Journey(object):
         data = res.json()
         if 'Stops' in data:
             self.stops = data['Stops']['Stop']
+        if 'Names' in data:
+            self.name = data['Names']['Name'][0]
 
     def print(self):
         for stop in self.stops:
@@ -42,3 +48,35 @@ class Journey(object):
             return t.timestamp() < time.time()
         else:
             return false
+
+    def build_headers(self, stop):
+        headers = []
+        sname = stop['name'].replace(' ','_')
+        if 'arrTime' in stop:
+            headers = headers + [sname + '_arrTime', sname + '_rtArrTime']
+        if 'depTime' in stop:
+            headers = headers + [sname + '_depTime', sname + '_rtDepTime']
+        return headers
+
+    def build_fields(self, stop):
+        fields = []
+        if 'arrTime' in stop:
+            fields = fields + [stop['arrTime'], stop['rtArrTime']]
+        if 'depTime' in stop:
+            fields = fields + [stop['depTime'], stop['rtDepTime']]
+        return fields
+
+    def to_csv(self):
+        filename = self.name['name'].replace(' ','_') + '.csv'
+        headers = ['journey_id'] + list(itertools.chain(*map(self.build_headers,self.stops)))
+        row = [self.journey_id] + list(itertools.chain(*map(self.build_fields,self.stops)))
+
+        mode = 'w'
+        if os.path.isfile(filename):
+            mode = 'a'
+
+        with open(filename, mode) as f:
+            writer = csv.writer(f)
+            if mode == 'w':
+                writer.writerow(headers)
+            writer.writerow(row)
