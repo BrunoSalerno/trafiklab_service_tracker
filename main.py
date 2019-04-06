@@ -5,9 +5,10 @@ import os
 
 start_time=time.time()
 
-api_key = os.environ['API_KEY']
-barkaby_station     = '9703'
-barkaby_handelplats = '5889'
+api_key      = os.environ['API_KEY']
+service      = os.environ['SERVICE']
+origin       = os.environ['ORIGIN']
+destination  = os.environ['DESTINATION']
 current_journey_id  = None
 
 def trip_url(orig_id,dest_id):
@@ -23,10 +24,10 @@ def find_trip(product_name,trips):
             if leg['Product']['name'] == product_name:
                 return leg
 
-def fetch_new_journey_id():
-    trip_data = requests.get(trip_url(barkaby_station,barkaby_handelplats))
+def fetch_new_journey_id(product_name, orig, dest):
+    trip_data = requests.get(trip_url(origin,dest))
     trips = trip_data.json()
-    trip = find_trip('Bus 550',trips['Trip'])
+    trip = find_trip(product_name,trips['Trip'])
     return trip['JourneyDetailRef']['ref']
 
 
@@ -37,7 +38,7 @@ while True:
     print('-> ' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
     if current_journey_id is None:
-        current_journey_id = fetch_new_journey_id()
+        current_journey_id = fetch_new_journey_id(service, origin, destination)
         print('=> New journey: ' + current_journey_id)
     else:
         print ('(current journey id: ' + current_journey_id +')')
