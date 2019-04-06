@@ -47,7 +47,7 @@ class Journey(object):
             t = datetime.datetime.strptime(last_stop['rtArrTime'] + ' ' + last_stop['rtArrDate'], "%H:%M:%S %Y-%m-%d")
             return t.timestamp() < time.time()
         else:
-            return false
+            return False
 
     def build_headers(self, stop):
         headers = []
