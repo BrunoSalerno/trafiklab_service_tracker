@@ -9,4 +9,4 @@ API_KEY=<Your API key> SERVICE="Bus 550" ORIGIN=9703 DESTINATION=5889 pipenv run
 ```
 
 The api key is the one for the Trafiklab's [TravelPlanner V3.1 API](https://www.trafiklab.se/api/sl-reseplanerare-31).
-The ids of origins and destinations can be fetch by using the Trafiklab's [Platsuppslag API](https://www.trafiklab.se/api/sl-platsuppslag/dokumentation).
+The ids of origins and destinations can be fetched with the Trafiklab's [Platsuppslag API](https://www.trafiklab.se/api/sl-platsuppslag/dokumentation).
