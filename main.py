@@ -54,16 +54,16 @@ while True:
 
     for stop in stops:
         print('> ' + stop['name'])
-        if 'depTime' in stop:
-            if 'rtDepTime' in stop:
-                print('depTime: ' + stop['depTime'] + ' | rtDepTime: ' + stop['rtDepTime'])
-            else:
-                print('no realtime info right now for depatures')
         if 'arrTime' in stop:
             if 'rtArrTime' in stop:
                 print('arrTime: ' + stop['arrTime'] + ' | rtArrTime: ' + stop['rtArrTime'])
             else:
                 print('no realtime info right now for arrivals')
+        if 'depTime' in stop:
+            if 'rtDepTime' in stop:
+                print('depTime: ' + stop['depTime'] + ' | rtDepTime: ' + stop['rtDepTime'])
+            else:
+                print('no realtime info right now for depatures')
 
     last_stop = stops[-1]
     if 'rtArrTime' in last_stop:
