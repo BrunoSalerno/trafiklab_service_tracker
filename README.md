@@ -1,7 +1,7 @@
 # trafiklab_service_tracker
 
 This tool fetches information about current journeys of a given transit route using the TrafikLab APIs. The data is only available for Stockholm, Sweden.
-The script logs every one minute the expected and actual time of departure/arrival by stop and for all the current journeys of the route. When each journey finishes, the final data is appended to a CSV file.
+The script logs every one minute the expected and actual time of departure/arrival by stop, for all the current journeys of the route. When each journey finishes, its final values are appended to a CSV file.
 
 ## Usage
 ```
