@@ -25,4 +25,4 @@ API_KEY=<Your API key> pipenv run python find_site.py Stora Torget
 ```
 
 ## API keys
-To get your API keys, you have to create a project in [Trafiklab](https://www.trafiklab.se), enable the desires APIs, and generate the keys.
+To get your API keys, you have to create a project in [Trafiklab](https://www.trafiklab.se), enable the desired APIs, and generate the keys.
