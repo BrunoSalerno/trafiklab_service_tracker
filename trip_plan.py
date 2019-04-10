@@ -6,6 +6,7 @@ class TripPlan(object):
         self.service = service
         self.orig = orig
         self.dest = dest
+        self.trips = []
         self.load()
 
     def url(self):
@@ -16,8 +17,6 @@ class TripPlan(object):
         json_res = res.json()
         if 'Trip' in json_res:
             self.trips = json_res['Trip']
-        else:
-            self.trips = []
 
     def next_trip(self):
         for trip in self.trips:
