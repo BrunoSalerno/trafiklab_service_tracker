@@ -13,7 +13,11 @@ class TripPlan(object):
 
     def load(self):
         res = requests.get(self.url())
-        self.trips = res.json()['Trip']
+        json_res = res.json()
+        if 'Trip' in json_res:
+            self.trips = json_res['Trip']
+        else:
+            self.trips = []
 
     def next_trip(self):
         for trip in self.trips:
