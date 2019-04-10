@@ -67,7 +67,7 @@ class Journey(object):
         return fields
 
     def to_csv(self):
-        filename = self.name['name'].replace(' ','_') + '.csv'
+        filename = self.name['name'].replace(' ','_') + '_from_' + self.stops[0]['name'].replace(' ','_') + '.csv'
         headers = ['journey_id'] + list(itertools.chain(*map(self.build_headers,self.stops)))
         row = [self.journey_id] + list(itertools.chain(*map(self.build_fields,self.stops)))
 
