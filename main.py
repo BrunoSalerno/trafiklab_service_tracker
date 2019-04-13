@@ -1,8 +1,8 @@
 import time
 import datetime
 import os
-from trip_plan import TripPlan
-from journey import Journey
+from lib.trip_plan import TripPlan
+from lib.journey import Journey
 
 start_time=time.time()
 
