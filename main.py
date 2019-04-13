@@ -41,8 +41,7 @@ while True:
         if not journey.expected_finish_time() or now > journey.expected_finish_time():
             if journey.expected_finish_time():
                 print('Journey ' + journey_id + ' should have finished. Checking')
-            journey.refresh()
-            if journey.has_stops_info():
+            if journey.refresh():
                 if journey.finished():
                     del journeys[journey_id]
                     journey.to_csv()

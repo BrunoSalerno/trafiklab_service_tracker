@@ -13,22 +13,20 @@ class Journey(object):
         self.name = None
         self.load()
 
-    def has_stops_info(self):
-        return self.stops is not None
-
     def url(self):
         return 'https://api.sl.se/api2/TravelplannerV3_1/journeydetail.json?key=' + self.api_key + '&id=' + self.journey_id
 
     def load(self):
         res = get_with_retry(self.url())
         data = res.json()
-        if 'Stops' in data:
-            self.stops = data['Stops']['Stop']
         if 'Names' in data:
             self.name = data['Names']['Name'][0]
+        if 'Stops' in data:
+            self.stops = data['Stops']['Stop']
+            return True
 
     def refresh(self):
-        self.load()
+        return self.load()
 
     def scheduled_finish_time(self):
         if not self.stops:
