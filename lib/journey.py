@@ -1,4 +1,4 @@
-import requests
+from utils.get_with_retry import get_with_retry
 import datetime
 import time
 import itertools
@@ -20,7 +20,7 @@ class Journey(object):
         return 'https://api.sl.se/api2/TravelplannerV3_1/journeydetail.json?key=' + self.api_key + '&id=' + self.journey_id
 
     def load(self):
-        res = requests.get(self.url())
+        res = get_with_retry(self.url())
         data = res.json()
         if 'Stops' in data:
             self.stops = data['Stops']['Stop']

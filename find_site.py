@@ -1,4 +1,4 @@
-import requests
+from utils.get_with_retry import get_with_retry
 import os
 import sys
 
@@ -11,7 +11,7 @@ if not place_name:
 
 url = 'https://api.sl.se/api2/typeahead.json?key=' + api_key + '&searchstring=' + place_name + '&maxresults=' + max_results
 
-res = requests.get(url)
+res = get_with_retry(url)
 data = res.json()
 
 print('Place name: Site Id')
