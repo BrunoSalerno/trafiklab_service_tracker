@@ -27,27 +27,27 @@ class Journey(object):
         if 'Names' in data:
             self.name = data['Names']['Name'][0]
 
-    def print(self):
-        for stop in self.stops:
-            print('> ' + stop['name'])
-            if 'arrTime' in stop:
-                if 'rtArrTime' in stop:
-                    print('arrTime: ' + stop['arrTime'] + ' | rtArrTime: ' + stop['rtArrTime'])
-                else:
-                    print('no realtime info right now for arrivals')
-            if 'depTime' in stop:
-                if 'rtDepTime' in stop:
-                    print('depTime: ' + stop['depTime'] + ' | rtDepTime: ' + stop['rtDepTime'])
-                else:
-                    print('no realtime info right now for depatures')
+    def refresh(self):
+        self.load()
 
-    def finished(self):
+    def scheduled_finish_time(self):
+        if not self.stops:
+            return None
+        last_stop = self.stops[-1]
+        if 'arrTime' in last_stop:
+            t = datetime.datetime.strptime(last_stop['arrTime'] + ' ' + last_stop['arrDate'], "%H:%M:%S %Y-%m-%d")
+            return t.timestamp()
+
+    def expected_finish_time(self):
+        if not self.stops:
+            return None
         last_stop = self.stops[-1]
         if 'rtArrTime' in last_stop:
             t = datetime.datetime.strptime(last_stop['rtArrTime'] + ' ' + last_stop['rtArrDate'], "%H:%M:%S %Y-%m-%d")
-            return t.timestamp() < time.time()
-        else:
-            return False
+            return t.timestamp()
+
+    def finished(self):
+        return self.expected_finish_time() and self.expected_finish_time() < time.time()
 
     def build_headers(self, stop):
         headers = []
