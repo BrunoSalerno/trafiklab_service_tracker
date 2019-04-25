@@ -14,9 +14,10 @@ class TripPlan(object):
 
     def load(self):
         res = get_with_retry(self.url())
-        json_res = res.json()
-        if 'Trip' in json_res:
-            self.trips = json_res['Trip']
+        if res.status_code < 300:
+            json_res = res.json()
+            if 'Trip' in json_res:
+                self.trips = json_res['Trip']
 
     def next_trip(self):
         for trip in self.trips:

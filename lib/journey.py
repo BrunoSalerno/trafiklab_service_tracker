@@ -18,12 +18,13 @@ class Journey(object):
 
     def load(self):
         res = get_with_retry(self.url())
-        data = res.json()
-        if 'Names' in data:
-            self.name = data['Names']['Name'][0]
-        if 'Stops' in data:
-            self.stops = data['Stops']['Stop']
-            return True
+        if res.status_code < 300:
+            data = res.json()
+            if 'Names' in data:
+                self.name = data['Names']['Name'][0]
+            if 'Stops' in data:
+                self.stops = data['Stops']['Stop']
+                return True
 
     def refresh(self):
         return self.load()
