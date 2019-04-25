@@ -50,7 +50,7 @@ while True:
                     # The following code remove old journeys with no realtime info
                     if not journey.expected_finish_time() and now > journey.scheduled_finish_time():
                         del journeys[journey_id]
-                        print('Stop tracking journey' + journey_id + ', which does not have realtime data')
+                        print('Stop tracking journey ' + journey_id + ', which does not have realtime data')
             else:
                 print('Error with the journey data. Skipping')
 
